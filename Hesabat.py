@@ -254,10 +254,14 @@ st.set_page_config(
 )
 st.header("FAB - Hesabat", divider='rainbow')
 today = date.today()
-tarix_1 = today.replace(day=1).isoformat()
-tarix_2 = today.isoformat()
+tarix_1 = today.replace(day=1)
+tarix_2 = today
 
-st.text(f"Tarix: \n{tarix_1} - {tarix_2}")
+# Format: DD.MM.YYYY
+tarix_1_str = tarix_1.strftime("%d.%m.%Y")
+tarix_2_str = tarix_2.strftime("%d.%m.%Y")
+
+st.text(f"Tarix: \n{tarix_1_str} - {tarix_2_str}")
     
 st.markdown(
     """
