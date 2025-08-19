@@ -374,20 +374,20 @@ st.markdown("""
     .footer {
         position: fixed;
         bottom: 0;
-        height: 170px;
-        width: 100%;
-        background-color: rgb(255 75 75 / var(--tw-bg-opacity));
+        left: 0;
+        right: 0;
+        height: 46px;
+        background-color: #FF4B4B;
         color: white;
         text-align: left;
-        padding: 10px 20px;
+        padding: 1rem 1.25rem;
         font-size: 12px;
-        line-height: 1.5;
-        z-index: 100;
+        z-index: 10;
     }
     </style>
 
     <div class="footer">
-        Created by Mətin Bayram
+        FAB
     </div>
 """, unsafe_allow_html=True)
 
