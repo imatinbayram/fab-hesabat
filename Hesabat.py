@@ -368,6 +368,29 @@ css_page = """
 
 st.markdown(css_page, unsafe_allow_html=True)
 
+
+st.markdown("""
+    <style>
+    .footer {
+        position: fixed;
+        bottom: 0;
+        height: 170px;
+        width: 100%;
+        background-color: rgb(255 75 75 / var(--tw-bg-opacity));
+        color: white;
+        text-align: left;
+        padding: 10px 20px;
+        font-size: 12px;
+        line-height: 1.5;
+        z-index: 100;
+    }
+    </style>
+
+    <div class="footer">
+        Created by Mətin Bayram
+    </div>
+""", unsafe_allow_html=True)
+
 sections = [
     ("Satış", hesabat_satis),
     ("Sifariş", hesabat_sifaris),
