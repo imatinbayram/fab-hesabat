@@ -257,7 +257,7 @@ today = date.today()
 tarix_1 = today.replace(day=1).isoformat()
 tarix_2 = today.isoformat()
 
-st.text(f"{tarix_1} - {tarix_2}")
+st.text(f"Tarix: \n{tarix_1} - {tarix_2}")
     
 st.markdown(
     """
