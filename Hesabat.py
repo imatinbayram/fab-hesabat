@@ -3,19 +3,10 @@ import streamlit as st
 import pandas as pd
 import warnings
 from datetime import date
-import pymssql
+import json
+import requests
 
 warnings.simplefilter("ignore")
-
-# -----------------------------
-# DB connection (global, once)
-# -----------------------------
-conn = pymssql.connect(
-    server='192.168.1.245',
-    user='ma',
-    password='mikro',
-    database='master'
-)
 
 # -----------------------------
 # Query helpers
@@ -31,11 +22,26 @@ def hesabat_satis():
         DECLARE @tarix2 DATE = '{tarix_2}';
         {query_text}
     """
-    cursor = conn.cursor()
-    cursor.execute(query)
-    rows = cursor.fetchall()
-    columns = [col[0] for col in cursor.description]
-    return pd.DataFrame(rows, columns=columns)
+    url = "http://81.17.83.210:1999/api/Metin/GetQueryTable"
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    }
+    html_json = {
+    "Query": query
+    }
+    response = requests.get(url, json=html_json, headers=headers, verify=False)
+
+    if response.status_code == 200:
+        api_data = response.json()
+        if api_data["Code"] == 0:
+            df = api_data["Data"]
+        else:
+            print("API Error:", api_data["Message"])
+    else:
+        print("Error:", response.status_code, response.text)
+        
+    return pd.DataFrame(df)
 
 def hesabat_qirmizi():
     today = date.today()
@@ -48,11 +54,26 @@ def hesabat_qirmizi():
         DECLARE @tarix2 DATE = '{tarix_2}';
         {query_text}
     """
-    cursor = conn.cursor()
-    cursor.execute(query)
-    rows = cursor.fetchall()
-    columns = [col[0] for col in cursor.description]
-    return pd.DataFrame(rows, columns=columns)
+    url = "http://81.17.83.210:1999/api/Metin/GetQueryTable"
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    }
+    html_json = {
+    "Query": query
+    }
+    response = requests.get(url, json=html_json, headers=headers, verify=False)
+
+    if response.status_code == 200:
+        api_data = response.json()
+        if api_data["Code"] == 0:
+            df = api_data["Data"]
+        else:
+            print("API Error:", api_data["Message"])
+    else:
+        print("Error:", response.status_code, response.text)
+        
+    return pd.DataFrame(df)
 
 def hesabat_borc():
     today = date.today()
@@ -65,11 +86,26 @@ def hesabat_borc():
         DECLARE @tarix2 DATE = '{tarix_2}';
         {query_text}
     """
-    cursor = conn.cursor()
-    cursor.execute(query)
-    rows = cursor.fetchall()
-    columns = [col[0] for col in cursor.description]
-    return pd.DataFrame(rows, columns=columns)
+    url = "http://81.17.83.210:1999/api/Metin/GetQueryTable"
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    }
+    html_json = {
+    "Query": query
+    }
+    response = requests.get(url, json=html_json, headers=headers, verify=False)
+
+    if response.status_code == 200:
+        api_data = response.json()
+        if api_data["Code"] == 0:
+            df = api_data["Data"]
+        else:
+            print("API Error:", api_data["Message"])
+    else:
+        print("Error:", response.status_code, response.text)
+        
+    return pd.DataFrame(df)
 
 def hesabat_sifaris():
     today = date.today()
@@ -80,11 +116,26 @@ def hesabat_sifaris():
         DECLARE @tarix2 DATE = '{tarix_2}';
         {query_text}
     """
-    cursor = conn.cursor()
-    cursor.execute(query)
-    rows = cursor.fetchall()
-    columns = [col[0] for col in cursor.description]
-    return pd.DataFrame(rows, columns=columns)
+    url = "http://81.17.83.210:1999/api/Metin/GetQueryTable"
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    }
+    html_json = {
+    "Query": query
+    }
+    response = requests.get(url, json=html_json, headers=headers, verify=False)
+
+    if response.status_code == 200:
+        api_data = response.json()
+        if api_data["Code"] == 0:
+            df = api_data["Data"]
+        else:
+            print("API Error:", api_data["Message"])
+    else:
+        print("Error:", response.status_code, response.text)
+        
+    return pd.DataFrame(df)
 
 # -----------------------------
 # Formatting helpers
