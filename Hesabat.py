@@ -262,7 +262,20 @@ tarix_1_str = tarix_1.strftime("%d.%m.%Y")
 tarix_2_str = tarix_2.strftime("%d.%m.%Y")
 
 st.text(f"Tarix: \n{tarix_1_str} - {tarix_2_str}")
-    
+
+st.markdown("""
+    <script>
+    const meta = document.createElement('meta');
+    meta.name = "description";
+    meta.content = "FAB HESABAT - Bu hesabat FAB şirkətlər qrupu üçün hazırlanmışdır.";
+    document.getElementsByTagName('head')[0].appendChild(meta);
+    </script>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+    <link rel="icon" href="logo.png" type="image/png">
+""", unsafe_allow_html=True)
+   
 st.markdown(
     """
     <style>
