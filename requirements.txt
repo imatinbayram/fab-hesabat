@@ -3,4 +3,5 @@ pandas
 openpyxl
 numpy
 xlsxwriter
-pymssql
+json
+requests
