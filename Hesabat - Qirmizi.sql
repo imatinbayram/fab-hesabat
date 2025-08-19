@@ -41,7 +41,7 @@ CLOSE CodeCursor;
 DEALLOCATE CodeCursor;
 
 SELECT
-    SaleGroup FILIAL,
+    LTRIM(SUBSTRING(SaleGroup, CHARINDEX('-', SaleGroup) + 1, LEN(SaleGroup))) FILIAL,
     SUM(ExpireDebt) QIRMIZI
 FROM #Report107
 WHERE
