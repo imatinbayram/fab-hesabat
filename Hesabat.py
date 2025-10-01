@@ -445,11 +445,11 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 sections = [
+    ("Günlük Satış", hesabat_satis_gunluk)
     ("Satış", hesabat_satis),
     ("Sifariş", hesabat_sifaris),
     ("Borc", hesabat_borc),
     ("Qırmızı", hesabat_qirmizi),
-    ("Günlük Satış", hesabat_satis_gunluk)
 ]
 
 for title, func in sections:
