@@ -10,6 +10,38 @@ warnings.simplefilter("ignore")
 # -----------------------------
 # Query helpers
 # -----------------------------
+def hesabat_satis_gunluk():
+    today = date.today()
+    tarix_1 = today.replace(day=1).isoformat()
+    #tarix_2 = today.isoformat()
+    with open("Hesabat - Satis - Gunluk.sql", encoding="utf-8") as f:
+        query_text = f.read().lstrip('\ufeff')
+    query = f"""
+        DECLARE @tarix1 DATE = '{tarix_1}';
+        DECLARE @tarix2 DATE = '{tarix_1}';
+        {query_text}
+    """
+    url = "http://81.17.83.210:1999/api/Metin/GetQueryTable"
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    }
+    html_json = {
+    "Query": query
+    }
+    response = requests.get(url, json=html_json, headers=headers, verify=False)
+
+    if response.status_code == 200:
+        api_data = response.json()
+        if api_data["Code"] == 0:
+            df = api_data["Data"]
+        else:
+            print("API Error:", api_data["Message"])
+    else:
+        print("Error:", response.status_code, response.text)
+        
+    return pd.DataFrame(df)
+
 def hesabat_satis():
     today = date.today()
     tarix_1 = today.replace(day=1).isoformat()
@@ -417,6 +449,7 @@ sections = [
     ("Sifariş", hesabat_sifaris),
     ("Borc", hesabat_borc),
     ("Qırmızı", hesabat_qirmizi),
+    ("Günlük Satış", hesabat_satis_gunluk)
 ]
 
 for title, func in sections:
@@ -472,5 +505,10 @@ for title, func in sections:
         df = coerce_numeric(df, ["QIRMIZI"])
         df, total_idx = add_sum_row(df, total_label="CƏM", sum_cols=["QIRMIZI"])
         fmt_map = {"QIRMIZI": fmt_space0}
+        
+    elif title == "Günlük Satış":
+        df = coerce_numeric(df, ["SATIS"])
+        df, total_idx = add_sum_row(df, total_label="CƏM", sum_cols=["SATIS"])
+        fmt_map = {"SATIS": fmt_space0}
 
     block.table(style_for_table(df, fmt_map, total_idx=total_idx))
