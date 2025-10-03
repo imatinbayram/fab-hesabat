@@ -332,25 +332,16 @@ st.markdown("""
     meta.content = "FAB HESABAT - Bu hesabat FAB şirkətlər qrupu üçün hazırlanmışdır.";
     document.getElementsByTagName('head')[0].appendChild(meta);
     </script>
-""", unsafe_allow_html=True)
 
-st.markdown("""
     <link rel="icon" href="logo.png" type="image/png">
-""", unsafe_allow_html=True)
-   
-st.markdown(
-    """
+
     <style>
     /* Hide left index (row headers) in tables rendered by pandas Styler */
     th.row_heading {display: none !important;}
     th.blank {display: none !important;}      /* top-left blank corner */
     tbody th {display: none !important;}      /* extra guard */
     </style>
-    """,
-    unsafe_allow_html=True,
-)
 
-st.markdown("""
 <style>
   table td {
     text-align: right;
@@ -374,9 +365,7 @@ st.markdown("""
     padding: 5px;
 }
 </style>
-""", unsafe_allow_html=True)
 
-st.markdown("""
 <style>
 /* Satış üçün 4 sütun */
 [data-testid="stMarkdownContainer"]:has(h2:has-text("Satış")) table td,
@@ -394,9 +383,7 @@ st.markdown("""
     width: 50%;
 }
 </style>
-""", unsafe_allow_html=True)
 
-css_header = """
 <style>
 
     [data-testid="stHeader"] {
@@ -410,11 +397,7 @@ css_header = """
 </style>
 <title>FAB MARKALAR</title>
 <meta name="description" content="FAB Şirkətlər Qrupu" />
-"""
 
-st.markdown(css_header, unsafe_allow_html=True)
-
-css_page = """
 <style>
 
     th {
@@ -447,12 +430,7 @@ css_page = """
 </style>
 <title>FAB MARKALAR</title>
 <meta name="description" content="FAB Şirkətlər Qrupu" />
-"""
 
-st.markdown(css_page, unsafe_allow_html=True)
-
-
-st.markdown("""
     <style>
     .footer {
         position: fixed;
