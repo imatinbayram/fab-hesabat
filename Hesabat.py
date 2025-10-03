@@ -12,13 +12,13 @@ warnings.simplefilter("ignore")
 # -----------------------------
 def hesabat_satis_gunluk():
     today = date.today()
-    tarix_1 = today.replace(day=1).isoformat()
-    #tarix_2 = today.isoformat()
+    #tarix_1 = today.replace(day=1).isoformat()
+    tarix_2 = today.isoformat()
     with open("Hesabat - Satis - Gunluk.sql", encoding="utf-8") as f:
         query_text = f.read().lstrip('\ufeff')
     query = f"""
-        DECLARE @tarix1 DATE = '{tarix_1}';
-        DECLARE @tarix2 DATE = '{tarix_1}';
+        DECLARE @tarix1 DATE = '{tarix_2}';
+        DECLARE @tarix2 DATE = '{tarix_2}';
         {query_text}
     """
     url = "http://81.17.83.210:1999/api/Metin/GetQueryTable"
@@ -139,6 +139,36 @@ def hesabat_borc():
     return pd.DataFrame(df)
 
 def hesabat_sifaris():
+    today = date.today()
+    tarix_2 = today.isoformat()
+    with open("Hesabat - Sifaris.sql", encoding="utf-8") as f:
+        query_text = f.read().lstrip('\ufeff')
+    query = f"""
+        DECLARE @tarix2 DATE = '{tarix_2}';
+        {query_text}
+    """
+    url = "http://81.17.83.210:1999/api/Metin/GetQueryTable"
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    }
+    html_json = {
+    "Query": query
+    }
+    response = requests.get(url, json=html_json, headers=headers, verify=False)
+
+    if response.status_code == 200:
+        api_data = response.json()
+        if api_data["Code"] == 0:
+            df = api_data["Data"]
+        else:
+            print("API Error:", api_data["Message"])
+    else:
+        print("Error:", response.status_code, response.text)
+        
+    return pd.DataFrame(df)
+
+def hesabat_sifaris_gunluk():
     today = date.today()
     tarix_2 = today.isoformat()
     with open("Hesabat - Sifaris.sql", encoding="utf-8") as f:
@@ -444,8 +474,16 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
+# Assuming each function returns a DataFrame
+hesabat_satis_gunluk_df = hesabat_satis_gunluk()
+hesabat_sifaris_gunluk_df = hesabat_sifaris_gunluk()
+
+# Merge the two DataFrames on "FİLİAL"
+hesabat_gunluk = pd.merge(hesabat_satis_gunluk_df, hesabat_sifaris_gunluk_df, on="FILIAL", how="outer")
+
+
 sections = [
-    ("Günlük Satış", hesabat_satis_gunluk),
+    ("Günlük", hesabat_gunluk),
     ("Satış", hesabat_satis),
     ("Sifariş", hesabat_sifaris),
     ("Borc", hesabat_borc),
@@ -506,9 +544,9 @@ for title, func in sections:
         df, total_idx = add_sum_row(df, total_label="CƏM", sum_cols=["QIRMIZI"])
         fmt_map = {"QIRMIZI": fmt_space0}
         
-    elif title == "Günlük Satış":
-        df = coerce_numeric(df, ["SATIS"])
-        df, total_idx = add_sum_row(df, total_label="CƏM", sum_cols=["SATIS"])
-        fmt_map = {"SATIS": fmt_space0}
+    elif title == "Günlük":
+        df = coerce_numeric(df, ["SATIS","SIFARIS"])
+        df, total_idx = add_sum_row(df, total_label="CƏM", sum_cols=["SATIS", "SIFARIS"])
+        fmt_map = {"SATIS": fmt_space0, "SIFARIS": fmt_space0}
 
     block.table(style_for_table(df, fmt_map, total_idx=total_idx))
