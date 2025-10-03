@@ -1,64 +1,18 @@
-﻿USE [BazarlamaHesabatDB]
-
-IF OBJECT_ID('tempdb..#Report104') IS NOT NULL
-    DROP TABLE #Report104;
-
-CREATE TABLE #Report104
-(
-    RegionType NVARCHAR(100),
-    Code NVARCHAR(50),
-    Name NVARCHAR(200),
-    ContragentCode NVARCHAR(50),
-    ContragentName NVARCHAR(200),
-    TotalOrder DECIMAL(18,0),
-    RaporDateOrder DECIMAL(18,0),
-    RaporDate_1_Order DECIMAL(18,0),
-    RaporDate_2_Order DECIMAL(18,0),
-    RaporDate_3_Order DECIMAL(18,0),
-    RaporDate_4_Order DECIMAL(18,0),
-    RaporDate_5_Order DECIMAL(18,0),
-    RaporDate_6_Order DECIMAL(18,0),
-    RaporDate_7_Order DECIMAL(18,0)
-);
-
-DECLARE @Code NVARCHAR(15);
-
-DECLARE CodeCursor CURSOR FAST_FORWARD FOR
-SELECT C
-FROM (VALUES
-   ('210'),('220'),('230'),('240'),('250'),
-   ('520'),('521'),('523'),('540'),('542'),
-   ('554'),('555'),('575')
-) AS V(C);
-
-OPEN CodeCursor;
-FETCH NEXT FROM CodeCursor INTO @Code;
-
-WHILE @@FETCH_STATUS = 0
-BEGIN
-    INSERT INTO #Report104
-    EXEC [dbo].[Report_104] @tarix2, @Code;
-
-    FETCH NEXT FROM CodeCursor INTO @Code;
-END
-
-CLOSE CodeCursor;
-DEALLOCATE CodeCursor;
+﻿USE MikroDB_V16_05
 
 SELECT 
-    [Name] [FILIAL],
-    ROUND(SUM(RaporDateOrder),0)    AS [SIFARIS_GUNLUK]
-    /*
-    ROUND(SUM(TotalOrder),0)        AS [SIFARIS]
-    ROUND(SUM(RaporDateOrder),0)    AS [BU GÜN],
-    ROUND(SUM(RaporDate_1_Order),0) AS [1 GÜN ƏVVƏL],
-    ROUND(SUM(RaporDate_2_Order),0) AS [2 GÜN ƏVVƏL],
-    ROUND(SUM(RaporDate_3_Order),0) AS [3 GÜN ƏVVƏL],
-    ROUND(SUM(RaporDate_4_Order),0) AS [4 GÜN ƏVVƏL],
-    ROUND(SUM(RaporDate_5_Order),0) AS [5 GÜN ƏVVƏL],
-    ROUND(SUM(RaporDate_6_Order),0) AS [6 GÜN ƏVVƏL],
-    ROUND(SUM(RaporDate_7_Order),0) AS [7 GÜN ƏVVƏL]
-    */
-FROM #Report104
-GROUP BY [Name]
-ORDER BY [Name]
+	crg_isim FILIAL,
+	ROUND(SUM(sip_tutar - sip_iskonto_1  - sip_iskonto_2 - sip_iskonto_3), 2) [SIFARIS]
+FROM MikroDB_V16_05.DBO.SIPARISLER WITH(NOLOCK)
+LEFT JOIN MikroDB_V16_05.DBO.CARI_HESAPLAR WITH(NOLOCK) ON cari_kod = sip_musteri_kod
+LEFT JOIN MikroDB_V16_05.DBO.CARI_HESAP_GRUPLARI WITH(NOLOCK) ON cari_grup_kodu = crg_kod
+WHERE
+	sip_tarih = @tarix2
+	and sip_evrakno_seri like 'O%'
+	and cari_grup_kodu in (
+   '210','220','230','240','250',
+   '520','521','523','540','542',
+   '554','555','575'
+	)
+
+GROUP BY crg_isim
