@@ -478,9 +478,9 @@ st.markdown("""
 hesabat_satis_gunluk_df = hesabat_satis_gunluk()
 hesabat_sifaris_gunluk_df = hesabat_sifaris_gunluk()
 
-# Merge the two DataFrames on "FİLİAL"
-hesabat_gunluk = pd.merge(hesabat_satis_gunluk_df, hesabat_sifaris_gunluk_df, on="FILIAL", how="outer")
-
+def hesabat_gunluk():
+    df = pd.merge(hesabat_satis_gunluk_df, hesabat_sifaris_gunluk_df, on="FILIAL", how="outer")
+    return df
 
 sections = [
     ("Günlük", hesabat_gunluk),
