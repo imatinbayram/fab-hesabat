@@ -326,21 +326,21 @@ tarix_2_str = tarix_2.strftime("%d.%m.%Y")
 st.text(f"Tarix: \n{tarix_1_str} - {tarix_2_str}")
 
 st.markdown("""
-    <script>
-    const meta = document.createElement('meta');
-    meta.name = "description";
-    meta.content = "FAB HESABAT - Bu hesabat FAB şirkətlər qrupu üçün hazırlanmışdır.";
-    document.getElementsByTagName('head')[0].appendChild(meta);
-    </script>
+<script>
+const meta = document.createElement('meta');
+meta.name = "description";
+meta.content = "FAB HESABAT - Bu hesabat FAB şirkətlər qrupu üçün hazırlanmışdır.";
+document.getElementsByTagName('head')[0].appendChild(meta);
+</script>
 
-    <link rel="icon" href="logo.png" type="image/png">
+<link rel="icon" href="logo.png" type="image/png">
 
-    <style>
-    /* Hide left index (row headers) in tables rendered by pandas Styler */
-    th.row_heading {display: none !important;}
-    th.blank {display: none !important;}      /* top-left blank corner */
-    tbody th {display: none !important;}      /* extra guard */
-    </style>
+<style>
+/* Hide left index (row headers) in tables rendered by pandas Styler */
+th.row_heading {display: none !important;}
+th.blank {display: none !important;}      /* top-left blank corner */
+tbody th {display: none !important;}      /* extra guard */
+</style>
 
 <style>
   table td {
@@ -431,7 +431,7 @@ st.markdown("""
 <title>FAB MARKALAR</title>
 <meta name="description" content="FAB Şirkətlər Qrupu" />
 
-    <style>
+<style>
     .footer {
         position: fixed;
         bottom: 0;
@@ -445,11 +445,11 @@ st.markdown("""
         font-size: 12px;
         z-index: 10;
     }
-    </style>
+</style>
 
-    <div class="footer">
-        FAB
-    </div>
+<div class="footer">
+    FAB
+</div>
 """, unsafe_allow_html=True)
 
 # Assuming each function returns a DataFrame
