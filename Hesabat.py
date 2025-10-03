@@ -171,7 +171,7 @@ def hesabat_sifaris():
 def hesabat_sifaris_gunluk():
     today = date.today()
     tarix_2 = today.isoformat()
-    with open("Hesabat - Sifaris.sql", encoding="utf-8") as f:
+    with open("Hesabat - Sifaris - GUNLUK.sql", encoding="utf-8") as f:
         query_text = f.read().lstrip('\ufeff')
     query = f"""
         DECLARE @tarix2 DATE = '{tarix_2}';
