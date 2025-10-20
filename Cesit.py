@@ -21,15 +21,6 @@ st.set_page_config(
     }
 )
 
-pages = {
-    "Hesabat": [
-    st.Page("Hesabat.py", title="HH1"),
-    st.Page("Cesit.py", title="HH2"),
-    ]
-}
-
-pg = st.navigation(pages, position="sidebar")
-
 bazarlama_filial = [
 'BAKI 1',
 'BAKI 2',
