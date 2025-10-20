@@ -322,7 +322,7 @@ pages = {
     ]
 }
 
-pg = st.navigation(pages, position="top")
+pg = st.navigation(pages, position="sidebar")
 
 st.header("FAB - Hesabat", divider='rainbow')
 today = date.today()

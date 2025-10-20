@@ -28,7 +28,7 @@ pages = {
     ]
 }
 
-pg = st.navigation(pages, position="top")
+pg = st.navigation(pages, position="sidebar")
 
 bazarlama_filial = [
 'BAKI 1',
