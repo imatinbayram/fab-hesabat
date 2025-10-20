@@ -4,303 +4,9 @@ import pandas as pd
 import warnings
 from datetime import date
 import requests
+from io import BytesIO
 
 warnings.simplefilter("ignore")
-
-# -----------------------------
-# Query helpers
-# -----------------------------
-def hesabat_satis_gunluk():
-    today = date.today()
-    #tarix_1 = today.replace(day=1).isoformat()
-    tarix_2 = today.isoformat()
-    with open("Hesabat - Satis - Gunluk.sql", encoding="utf-8") as f:
-        query_text = f.read().lstrip('\ufeff')
-    query = f"""
-        DECLARE @tarix1 DATE = '{tarix_2}';
-        DECLARE @tarix2 DATE = '{tarix_2}';
-        {query_text}
-    """
-    url = "http://81.17.83.210:1999/api/Metin/GetQueryTable"
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-    }
-    html_json = {
-    "Query": query
-    }
-    response = requests.get(url, json=html_json, headers=headers, verify=False)
-
-    if response.status_code == 200:
-        api_data = response.json()
-        if api_data["Code"] == 0:
-            df = api_data["Data"]
-        else:
-            print("API Error:", api_data["Message"])
-    else:
-        print("Error:", response.status_code, response.text)
-        
-    return pd.DataFrame(df)
-
-def hesabat_satis():
-    today = date.today()
-    tarix_1 = today.replace(day=1).isoformat()
-    tarix_2 = today.isoformat()
-    with open("Hesabat - Satis.sql", encoding="utf-8") as f:
-        query_text = f.read().lstrip('\ufeff')
-    query = f"""
-        DECLARE @tarix1 DATE = '{tarix_1}';
-        DECLARE @tarix2 DATE = '{tarix_2}';
-        {query_text}
-    """
-    url = "http://81.17.83.210:1999/api/Metin/GetQueryTable"
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-    }
-    html_json = {
-    "Query": query
-    }
-    response = requests.get(url, json=html_json, headers=headers, verify=False)
-
-    if response.status_code == 200:
-        api_data = response.json()
-        if api_data["Code"] == 0:
-            df = api_data["Data"]
-        else:
-            print("API Error:", api_data["Message"])
-    else:
-        print("Error:", response.status_code, response.text)
-        
-    return pd.DataFrame(df)
-
-def hesabat_qirmizi():
-    today = date.today()
-    tarix_1 = today.replace(day=1).isoformat()
-    tarix_2 = today.isoformat()
-    with open("Hesabat - Qirmizi.sql", encoding="utf-8") as f:
-        query_text = f.read().lstrip('\ufeff')
-    query = f"""
-        DECLARE @tarix1 DATE = '{tarix_1}';
-        DECLARE @tarix2 DATE = '{tarix_2}';
-        {query_text}
-    """
-    url = "http://81.17.83.210:1999/api/Metin/GetQueryTable"
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-    }
-    html_json = {
-    "Query": query
-    }
-    response = requests.get(url, json=html_json, headers=headers, verify=False)
-
-    if response.status_code == 200:
-        api_data = response.json()
-        if api_data["Code"] == 0:
-            df = api_data["Data"]
-        else:
-            print("API Error:", api_data["Message"])
-    else:
-        print("Error:", response.status_code, response.text)
-        
-    return pd.DataFrame(df)
-
-def hesabat_borc():
-    today = date.today()
-    tarix_1 = today.replace(day=1).isoformat()
-    tarix_2 = today.isoformat()
-    with open("Hesabat - Borc.sql", encoding="utf-8") as f:
-        query_text = f.read().lstrip('\ufeff')
-    query = f"""
-        DECLARE @tarix1 DATE = '{tarix_1}';
-        DECLARE @tarix2 DATE = '{tarix_2}';
-        {query_text}
-    """
-    url = "http://81.17.83.210:1999/api/Metin/GetQueryTable"
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-    }
-    html_json = {
-    "Query": query
-    }
-    response = requests.get(url, json=html_json, headers=headers, verify=False)
-
-    if response.status_code == 200:
-        api_data = response.json()
-        if api_data["Code"] == 0:
-            df = api_data["Data"]
-        else:
-            print("API Error:", api_data["Message"])
-    else:
-        print("Error:", response.status_code, response.text)
-        
-    return pd.DataFrame(df)
-
-def hesabat_sifaris():
-    today = date.today()
-    tarix_2 = today.isoformat()
-    with open("Hesabat - Sifaris.sql", encoding="utf-8") as f:
-        query_text = f.read().lstrip('\ufeff')
-    query = f"""
-        DECLARE @tarix2 DATE = '{tarix_2}';
-        {query_text}
-    """
-    url = "http://81.17.83.210:1999/api/Metin/GetQueryTable"
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-    }
-    html_json = {
-    "Query": query
-    }
-    response = requests.get(url, json=html_json, headers=headers, verify=False)
-
-    if response.status_code == 200:
-        api_data = response.json()
-        if api_data["Code"] == 0:
-            df = api_data["Data"]
-        else:
-            print("API Error:", api_data["Message"])
-    else:
-        print("Error:", response.status_code, response.text)
-        
-    return pd.DataFrame(df)
-
-def hesabat_sifaris_gunluk():
-    today = date.today()
-    tarix_2 = today.isoformat()
-    with open("Hesabat - Sifaris - Gunluk.sql", encoding="utf-8") as f:
-        query_text = f.read().lstrip('\ufeff')
-    query = f"""
-        DECLARE @tarix2 DATE = '{tarix_2}';
-        {query_text}
-    """
-    url = "http://81.17.83.210:1999/api/Metin/GetQueryTable"
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-    }
-    html_json = {
-    "Query": query
-    }
-    response = requests.get(url, json=html_json, headers=headers, verify=False)
-
-    if response.status_code == 200:
-        api_data = response.json()
-        if api_data["Code"] == 0:
-            df = api_data["Data"]
-        else:
-            print("API Error:", api_data["Message"])
-    else:
-        print("Error:", response.status_code, response.text)
-        
-    return pd.DataFrame(df)
-
-# -----------------------------
-# Formatting helpers
-# -----------------------------
-BLUE = "#000C7B"
-
-def remove_index_like_columns(df: pd.DataFrame) -> pd.DataFrame:
-    # Drop explicit index-like columns if they exist
-    cols_to_drop = [c for c in df.columns if str(c).strip().lower() == "index" or str(c).startswith("Unnamed:")]
-    return df.drop(columns=cols_to_drop, errors="ignore")
-
-def fmt_space0(x):
-    if pd.isna(x):
-        return ""
-    try:
-        return f"{float(x):,.0f}".replace(",", " ")
-    except Exception:
-        return x
-
-def fmt_icra(x):
-    if pd.isna(x):
-        return ""
-    try:
-        return f"{float(x):.2f} %"
-    except Exception:
-        return x
-
-def style_for_table(df: pd.DataFrame, fmt_map: dict | None = None, total_idx=None):
-    # Header style
-    header_css = [
-        {
-            "selector": "thead th",
-            "props": [
-                ("background-color", BLUE),
-                ("color", "white"),
-                ("font-weight", "bold"),
-                ("text-align", "right"),
-            ],
-        }
-    ]
-    styler = df.style.set_table_styles(header_css).hide(axis="index")
-
-    # Per-column formatters (functions or format strings)
-    if fmt_map:
-        safe_map = {col: fmt for col, fmt in fmt_map.items() if col in df.columns}
-        if safe_map:
-            styler = styler.format(safe_map, na_rep="")
-
-    # Highlight SUM row like header
-    if total_idx is not None and total_idx in df.index:
-        def _apply_total(_df):
-            styles = pd.DataFrame("", index=_df.index, columns=_df.columns)
-            styles.loc[total_idx, :] = f"background-color: {BLUE}; color: white; font-weight: bold;"
-            return styles
-        styler = styler.apply(_apply_total, axis=None)
-
-    return styler
-
-def coerce_numeric(df: pd.DataFrame, cols: list[str]):
-    existing = [c for c in cols if c in df.columns]
-    if existing:
-        df[existing] = df[existing].apply(pd.to_numeric, errors="coerce")
-    return df
-
-def add_sum_row(df: pd.DataFrame, total_label: str = "CƏM",
-                sum_cols: list[str] | None = None,
-                sales_col: str | None = None,
-                plan_col: str | None = None,
-                icra_col: str | None = None,
-                icra_as_percent: bool = True):
-    
-    if df.empty:
-        return df, None
-
-    out = df.copy()
-    totals = {col: "" for col in out.columns}
-
-    # Label in the first column
-    first_col = out.columns[0]
-    totals[first_col] = total_label
-
-    # Direct sums
-    if sum_cols:
-        for c in sum_cols:
-            if c in out.columns:
-                totals[c] = pd.to_numeric(out[c], errors="coerce").sum(skipna=True)
-
-    # ICRA from totals
-    if sales_col and plan_col and icra_col and sales_col in out.columns and plan_col in out.columns:
-        sales_total = pd.to_numeric(out[sales_col], errors="coerce").sum(skipna=True)
-        plan_total = pd.to_numeric(out[plan_col], errors="coerce").sum(skipna=True)
-        if plan_total and plan_total != 0:
-            ratio = sales_total / plan_total
-            totals[icra_col] = ratio * (100 if icra_as_percent else 1)
-        else:
-            totals[icra_col] = None
-        if (sum_cols or []) and sales_col not in sum_cols:
-            totals[sales_col] = sales_total
-        if (sum_cols or []) and plan_col not in sum_cols:
-            totals[plan_col] = plan_total
-
-    out = pd.concat([out, pd.DataFrame([totals], columns=out.columns)], ignore_index=True)
-    total_idx = out.index[-1]
-    return out, total_idx
 
 # -----------------------------
 # Streamlit App
@@ -308,13 +14,125 @@ def add_sum_row(df: pd.DataFrame, total_label: str = "CƏM",
 st.set_page_config(
     page_title='FAB HESABAT',
     page_icon='logo.png',
-    layout="centered",
+    layout="wide",
     initial_sidebar_state="expanded",
     menu_items={
         'About': "# FAB HESABAT \n Bu hesabat FAB şirkətlər qrupu üçün hazırlanmışdır."
     }
 )
-st.header("FAB - Hesabat", divider='rainbow')
+
+bazarlama_filial = [
+'BAKI 1',
+'BAKI 2',
+'BAKI 3',
+'BAKI 4',
+'BAKI 5',
+'BNAXCHIVAN',
+'GENCE1',
+'GENCE2',
+'GOYCAY',
+'QUBA',
+'LENKERAN',
+'SABIRABAD',
+'SEKI'
+]
+
+select_filial = st.selectbox("Filial",bazarlama_filial,
+                                    index=0,
+                                    placeholder = 'Filial',
+                                    label_visibility='collapsed')
+
+musteri_qrup = pd.read_excel("Musteri.xlsx", sheet_name="Qrup")
+
+temsilci_list = musteri_qrup[musteri_qrup["AD"] == select_filial]["Temsilci"].tolist()
+
+def cesitstok():
+    today = date.today()
+    #tarix_1 = today.replace(day=1).isoformat()
+    tarix_2 = today.isoformat()
+    with open("CesitStok.sql", encoding="utf-8") as f:
+        query_text = f.read().lstrip('\ufeff')
+    query = f"""
+    DECLARE @filial NVARCHAR(50) = N'{select_filial}';
+    WITH Periods AS (
+    SELECT '2025-07-01' AS StartDate, '2025-07-31' AS EndDate, '7ci_ay' AS PeriodNote
+    UNION ALL SELECT '2025-08-01', '2025-08-31', '8ci_ay'
+    UNION ALL SELECT '2025-09-01', '2025-09-30', '9cu_ay'
+    UNION ALL SELECT '2025-10-01', '{tarix_2}', '10cu_ay'
+    UNION ALL SELECT '2025-07-01', '2025-09-30', '7_8_9_ay'
+    UNION ALL SELECT '2025-08-01', '{tarix_2}', '8_9_10_ay'
+    UNION ALL SELECT '2025-07-01', '{tarix_2}', '7_8_9_10_ay'
+    ),
+    {query_text}
+    """
+    url = "http://81.17.83.210:1999/api/Metin/GetQueryTable"
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    }
+    html_json = {
+    "Query": query
+    }
+    response = requests.get(url, json=html_json, headers=headers, verify=False)
+
+    if response.status_code == 200:
+        api_data = response.json()
+        if api_data["Code"] == 0:
+            df = api_data["Data"]
+        else:
+            print("API Error:", api_data["Message"])
+    else:
+        print("Error:", response.status_code, response.text)
+        
+    return pd.DataFrame(df)
+
+def musteri_sayi():
+    all_data = []  # list to store data from each seller
+
+    for temsilci in temsilci_list:
+        query = f"""
+            DECLARE 
+                @IL INT = 2025,
+                @AY INT = 10,
+                @Seller NVARCHAR(10) = N'{temsilci}';
+            
+            USE [BazarlamaHesabatDB];
+            
+            EXEC [dbo].[Report_201_PART_3]
+                @IL = @IL,
+                @AY = @AY,
+                @Seller = @Seller;
+        """
+
+        url = "http://81.17.83.210:1999/api/Metin/GetQueryTable"
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+
+        payload = {"Query": query}
+        response = requests.get(url, json=payload, headers=headers, verify=False)
+
+        if response.status_code == 200:
+            api_data = response.json()
+            if api_data.get("Code") == 0 and api_data.get("Data"):
+                df = pd.DataFrame(api_data["Data"])
+                all_data.append(df)
+            else:
+                print(f"API Error for {temsilci}: {api_data.get('Message')}")
+        else:
+            print(f"HTTP Error for {temsilci}: {response.status_code}")
+
+    # Combine all results into one DataFrame
+    if all_data:
+        final_df = pd.concat(all_data, ignore_index=True)
+        return final_df
+    else:
+        print("No data returned from API.")
+        return pd.DataFrame()
+
+
+st.header(f"{select_filial} - ŞOK Kampaniya məhsulları müştəri sayı", divider='rainbow')
 today = date.today()
 tarix_1 = today.replace(day=1)
 tarix_2 = today
@@ -323,7 +141,7 @@ tarix_2 = today
 tarix_1_str = tarix_1.strftime("%d.%m.%Y")
 tarix_2_str = tarix_2.strftime("%d.%m.%Y")
 
-st.text(f"Tarix: \n{tarix_1_str} - {tarix_2_str}")
+st.text(f"Tarix: {tarix_2_str}")
 
 st.markdown("""
 <script>
@@ -366,23 +184,6 @@ tbody th {display: none !important;}      /* extra guard */
 }
 </style>
 
-<style>
-/* Satış üçün 4 sütun */
-[data-testid="stMarkdownContainer"]:has(h2:has-text("Satış")) table td,
-[data-testid="stMarkdownContainer"]:has(h2:has-text("Satış")) table th {
-    width: 25%;
-}
-
-/* Sifariş, Borc, Qırmızı üçün 2 sütun */
-[data-testid="stMarkdownContainer"]:has(h2:has-text("Sifariş")) table td,
-[data-testid="stMarkdownContainer"]:has(h2:has-text("Sifariş")) table th,
-[data-testid="stMarkdownContainer"]:has(h2:has-text("Borc")) table td,
-[data-testid="stMarkdownContainer"]:has(h2:has-text("Borc")) table th,
-[data-testid="stMarkdownContainer"]:has(h2:has-text("Qırmızı")) table td,
-[data-testid="stMarkdownContainer"]:has(h2:has-text("Qırmızı")) table th {
-    width: 50%;
-}
-</style>
 
 <style>
 
@@ -452,79 +253,73 @@ tbody th {display: none !important;}      /* extra guard */
 </div>
 """, unsafe_allow_html=True)
 
-# Assuming each function returns a DataFrame
-hesabat_satis_gunluk_df = hesabat_satis_gunluk()
-hesabat_sifaris_gunluk_df = hesabat_sifaris_gunluk()
+cesitstok_data = cesitstok()
 
-def hesabat_gunluk():
-    df = pd.merge(hesabat_satis_gunluk_df, hesabat_sifaris_gunluk_df, on="FILIAL", how="outer")
-    return df
+cesitstok_data = cesitstok_data[cesitstok_data["Filial"]==select_filial]
 
-sections = [
-    ("Günlük", hesabat_gunluk),
-    ("Satış", hesabat_satis),
-    ("Sifariş", hesabat_sifaris),
-    ("Borc", hesabat_borc),
-    ("Qırmızı", hesabat_qirmizi),
-]
+pivot_cesitstok_data = cesitstok_data.pivot(
+    index=["Filial", "Kateqoriya", "KOD", "AD"],
+    columns="Period",
+    values="Deyer"
+).reset_index()
 
-for title, func in sections:
-    block = st.container()
-    block.subheader(title)
+pivot_cesitstok_data = pivot_cesitstok_data.fillna(0)
 
-    with st.spinner("Məlumat yüklənir..."):
-        try:
-            df = func()
-        except Exception as e:
-            block.error(f"Xəta: {e}")
-            continue
+musteri_sayi_func = musteri_sayi()
 
-    if df is None or df.empty:
-        block.info("Məlumat tapılmadı.")
-        continue
+musteri_sayi_cedvel = musteri_sayi_func[["GroupName","ProductGroup","TotalContragentCount","MinSaleContragentCount"]]
+musteri_sayi_cedvel.rename(columns={
+    "GroupName": "Filial",
+    "ProductGroup": "Kateqoriya",
+    "TotalContragentCount": "Musteri sayi",
+    "MinSaleContragentCount": "Hedef"
+}, inplace=True)
 
-    # Remove explicit index-like columns if exist
-    df = remove_index_like_columns(df)
+cesitstok_musterisay = pivot_cesitstok_data.merge(
+    musteri_sayi_cedvel,
+    how="left",
+    on=["Filial", "Kateqoriya"]
+)
 
-    # ----- Per-section numeric coercion, totals, and formats -----
-    fmt_map = {}
-    total_idx = None
+period_columns = ["7ci_ay", "8ci_ay", "9cu_ay", "10cu_ay",
+                  "7_8_9_ay", "8_9_10_ay", "7_8_9_10_ay"]
+numeric_columns = ["Musteri sayi", "Hedef"] + period_columns
 
-    if title == "Satış":
-        df = coerce_numeric(df, ["SATIS", "PLAN", "ICRA"])
-        df, total_idx = add_sum_row(
-            df,
-            total_label="CƏM",
-            sum_cols=["SATIS", "PLAN"],
-            sales_col="SATIS",
-            plan_col="PLAN",
-            icra_col="ICRA",
-            icra_as_percent=True
+final_columns = ["Filial", "Kateqoriya", "AD"] + numeric_columns
+cesitstok_musterisay = cesitstok_musterisay[final_columns]
+
+cesitstok_musterisay["Performans"] = cesitstok_musterisay.apply(
+    lambda row: "Az artim var" if row["8_9_10_ay"] > row["7_8_9_ay"] else "Artim yox",
+    axis=1
+)
+
+styled_df = cesitstok_musterisay.style.format({col: "{:.0f}" for col in numeric_columns})
+
+st.table(styled_df)
+
+# ---------------------------------------------
+# Excel export with auto column width
+# ---------------------------------------------
+df_to_excel = styled_df.data if hasattr(styled_df, "data") else styled_df
+
+output = BytesIO()
+with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+    df_to_excel.to_excel(writer, index=False, sheet_name='Ümumi')
+    worksheet = writer.sheets['Ümumi']
+
+    # Set column widths based on max length of content
+    for i, col in enumerate(df_to_excel.columns):
+        max_len = max(
+            df_to_excel[col].astype(str).map(len).max(),  # Max length of values
+            len(str(col))  # Max length of column name
         )
-        fmt_map = {
-            "SATIS": fmt_space0,   # space thousands, 0 decimals
-            "PLAN": fmt_space0,    # space thousands, 0 decimals
-            "ICRA": fmt_icra,      # two decimals (no % sign)
-        }
+        worksheet.set_column(i, i, max_len + 2)  # +2 for padding
 
-    elif title == "Sifariş":
-        df = coerce_numeric(df, ["SIFARIS"])
-        df, total_idx = add_sum_row(df, total_label="CƏM", sum_cols=["SIFARIS"])
-        fmt_map = {"SIFARIS": fmt_space0}
+excel_data = output.getvalue()
 
-    elif title == "Borc":
-        df = coerce_numeric(df, ["BORC"])
-        df, total_idx = add_sum_row(df, total_label="CƏM", sum_cols=["BORC"])
-        fmt_map = {"BORC": fmt_space0}
-
-    elif title == "Qırmızı":
-        df = coerce_numeric(df, ["QIRMIZI"])
-        df, total_idx = add_sum_row(df, total_label="CƏM", sum_cols=["QIRMIZI"])
-        fmt_map = {"QIRMIZI": fmt_space0}
-        
-    elif title == "Günlük":
-        df = coerce_numeric(df, ["SATIS","SIFARIS"])
-        df, total_idx = add_sum_row(df, total_label="CƏM", sum_cols=["SATIS", "SIFARIS"])
-        fmt_map = {"SATIS": fmt_space0, "SIFARIS": fmt_space0}
-
-    block.table(style_for_table(df, fmt_map, total_idx=total_idx))
+st.download_button(
+    label=":green[Cədvəli Excel'ə yüklə] :floppy_disk:",
+    data=excel_data,
+    file_name=f"{select_filial} - SOK Kampaniya mehsullari musteri sayi.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+)
