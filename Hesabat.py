@@ -314,6 +314,14 @@ st.set_page_config(
         'About': "# FAB HESABAT \n Bu hesabat FAB şirkətlər qrupu üçün hazırlanmışdır."
     }
 )
+
+pages = {
+    "H1": st.Page("Hesabat.py", title="HH1"),
+    "H2": st.Page("Cesit.py", title="HH2"),
+}
+
+pg = st.navigation(pages, position="top")
+
 st.header("FAB - Hesabat", divider='rainbow')
 today = date.today()
 tarix_1 = today.replace(day=1)
