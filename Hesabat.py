@@ -316,8 +316,10 @@ st.set_page_config(
 )
 
 pages = {
-    "H1": st.Page("Hesabat.py", title="HH1"),
-    "H2": st.Page("Cesit.py", title="HH2"),
+    "Hesabat": [
+    st.Page("Hesabat.py", title="HH1"),
+    st.Page("Cesit.py", title="HH2"),
+    ]
 }
 
 pg = st.navigation(pages, position="top")
