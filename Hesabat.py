@@ -27,7 +27,8 @@ def hesabat_satis_gunluk():
         "Accept": "application/json"
     }
     html_json = {
-    "Query": query
+    "Query": query,
+    "Kod": st.secrets["Kod"]
     }
     response = requests.get(url, json=html_json, headers=headers, verify=False)
 
@@ -59,7 +60,8 @@ def hesabat_satis():
         "Accept": "application/json"
     }
     html_json = {
-    "Query": query
+    "Query": query,
+    "Kod": st.secrets["Kod"]
     }
     response = requests.get(url, json=html_json, headers=headers, verify=False)
 
@@ -91,7 +93,8 @@ def hesabat_qirmizi():
         "Accept": "application/json"
     }
     html_json = {
-    "Query": query
+    "Query": query,
+    "Kod": st.secrets["Kod"]
     }
     response = requests.get(url, json=html_json, headers=headers, verify=False)
 
@@ -123,7 +126,8 @@ def hesabat_borc():
         "Accept": "application/json"
     }
     html_json = {
-    "Query": query
+    "Query": query,
+    "Kod": st.secrets["Kod"]
     }
     response = requests.get(url, json=html_json, headers=headers, verify=False)
 
@@ -153,7 +157,8 @@ def hesabat_sifaris():
         "Accept": "application/json"
     }
     html_json = {
-    "Query": query
+    "Query": query,
+    "Kod": st.secrets["Kod"]
     }
     response = requests.get(url, json=html_json, headers=headers, verify=False)
 
@@ -183,7 +188,8 @@ def hesabat_sifaris_gunluk():
         "Accept": "application/json"
     }
     html_json = {
-    "Query": query
+    "Query": query,
+    "Kod": st.secrets["Kod"]
     }
     response = requests.get(url, json=html_json, headers=headers, verify=False)
 
@@ -529,3 +535,4 @@ for title, func in sections:
         fmt_map = {"SATIS": fmt_space0, "SIFARIS": fmt_space0}
 
     block.table(style_for_table(df, fmt_map, total_idx=total_idx))
+
